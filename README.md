@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/btc-race-24h-20261117-0603/tiankundi/btc-race-bot/rank.svg)](https://make.fun/bounty/btc-race-24h-20261117-0603/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261117-0603)
 [![reward](https://make.fun/badge/btc-race-24h-20261117-0603/tiankundi/btc-race-bot/reward.svg)](https://make.fun/bounty/btc-race-24h-20261117-0603?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261117-0603)
 
-Hourly RSI mean-reversion bot trading cbBTC/USDC on 1-minute on-chain bars: it buys deep hourly dips (RSI(60) ≤ 33), sells the recovery (RSI ≥ 65), and carries a 2% crash stop. A full round trip costs ~34 bps in fees, slippage and pool impact, so it never trades 1-minute noise (~6 bps) and only catches the 50–130 bps hourly swings. On the published dev window it makes **+$25.61 net PnL over 3 round trips (6 trades), max drawdown 1.32%** — buy-and-hold makes +$1.07 there and the house EMA-cross bot loses $106.21.
+Hourly RSI mean-reversion bot trading cbBTC/USDC on 1-minute on-chain bars: it buys deep hourly dips (RSI(60) ≤ 32), sells the recovery (RSI ≥ 66), and carries a 2% crash stop. A full round trip costs ~34 bps in fees, slippage and pool impact, so it never trades 1-minute noise (~6 bps) and only catches the 50–130 bps hourly swings. On the published dev window it makes **+$26.03 net PnL over 3 round trips (6 trades), max drawdown 1.32%** — buy-and-hold makes +$1.07 there and the house EMA-cross bot loses $106.21. Thresholds 32/66 were chosen by a grade-local neighbourhood sweep (buy 30–38, sell 62–70) over the original 33/65 (+$25.61).
 
 ## Run it
 

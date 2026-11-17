@@ -3,8 +3,8 @@
 // Strategy (long only, one position, full size):
 // - RSI(60) over 1-minute closes (simple mean of gains/losses over the last
 //   60 bars, the classic Wilder inputs without Wilder smoothing).
-// - Buy 100% of cash when RSI <= 33 (an hourly oversold dip).
-// - Sell the whole position when RSI >= 65 (the dip has reverted) or when the
+// - Buy 100% of cash when RSI <= 32 (an hourly oversold dip).
+// - Sell the whole position when RSI >= 66 (the dip has reverted) or when the
 //   position is 2% under its cost (a crash stop; never hit on the dev window).
 // - Every order caps slippage at 150 bps from the latest close.
 //
@@ -13,9 +13,17 @@
 // the bot must catch moves well above that. One-minute noise is only ~6 bps,
 // so it never trades on it; the hourly swings in the dev window are 50-130 bps,
 // and RSI(60) buys the deep hourly dips and sells the recoveries. On the
-// published dev window this makes +$25.61 over 3 round trips with a 1.32%
+// published dev window this makes +$26.03 over 3 round trips with a 1.32%
 // maximum drawdown (buy-and-hold makes +$1.07; the house EMA-cross bot loses
 // $106.21 there).
+//
+// Threshold tuning (2026-11-17, measured with the kit's grade-local on the
+// dev window, driver process): the original 33/65 pair scored +$25.613695.
+// A neighbourhood sweep (buy 30-38 at sell 65, sell 62-70 at buy 33, then the
+// cross terms) found 32/66 best at +$26.029830 with the same 1.32% maximum
+// drawdown and the same 6 trades: buy 32 alone gave +$25.929362, sell 66
+// alone gave +$25.714811, and every wider move (buy <=31 or >=34, sell <=64
+// or >=67) scored worse, so 32/66 is a local optimum, not a wider regime.
 //
 // Determinism: no wall clock, no environment, no randomness; the only state is
 // the closes seen so far, and every computation is a fixed sequence of integer
@@ -26,8 +34,8 @@ import { runBars, type BarsState, type Batch, type OrderInput } from './vendor/m
 
 const SYMBOL = 'CBBTC';
 const RSI_PERIOD = 60;
-const RSI_BUY = 33;
-const RSI_SELL = 65;
+const RSI_BUY = 32;
+const RSI_SELL = 66;
 const STOP_LOSS_BPS = 200n; // sell when the position is 2% under its cost
 const MAX_SLIPPAGE_BPS = 150;
 
